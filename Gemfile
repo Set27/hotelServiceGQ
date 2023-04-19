@@ -78,3 +78,5 @@ gem "graphiql-rails", group: :development
 gem "pry", "~> 0.14.2"
 
 gem "bcrypt", "~> 3.1"
+
+gem "action_policy-graphql", "~> 0.5.3"

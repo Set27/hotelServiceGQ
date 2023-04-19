@@ -9,15 +9,18 @@ module Mutations
     field :room, Types::RoomType, null: false
 
     def resolve(title:, price:, capacity:, rating:, is_occupied:)
-      raise GraphQL::ExecutionError, "You must be signed in to create a room" if context[:current_user].nil?
-      binding.pry
-      room = Room.create!(
+      # raise GraphQL::ExecutionError, "You must be signed in to create a room" if context[:current_user].nil?
+      room = Room.new(
         title: title,
         price: price,
         capacity: capacity,
         rating: rating,
         is_occupied: is_occupied
       )
+
+      authorize! room, to: :create?
+
+      room.save!
 
       { room: room }
     end

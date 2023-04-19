@@ -5,7 +5,7 @@ module Types
     field :price, Integer, null: true
     field :capacity, Integer, null: true
     field :rating, Types::RatingEnum, null: true
-    field :is_occupied, Boolean, null: true # Make sure this line is present
+    field :is_occupied, Boolean, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

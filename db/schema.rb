@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_19_113639) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_19_180707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "role_enum", ["ADMIN", "USER"]
   create_enum "room_class", ["STANDART", "DELUXE", "SUITE"]
 
   create_table "rooms", force: :cascade do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_19_113639) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "role", enum_type: "role_enum"
   end
 
 end

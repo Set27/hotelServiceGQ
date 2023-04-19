@@ -6,6 +6,7 @@ module Mutations
   #   object_class Types::BaseObject
   # end
   class BaseMutation < GraphQL::Schema::Mutation
+    include ActionPolicy::GraphQL::Behaviour
     null false
   end
 end
