@@ -14,16 +14,21 @@ module Types
       "Hello World!"
     end
 
-    field :room_title, String, null: true do
-      description "Find a room's title by ID"
+    field :room, Types::RoomType, null: true do
+      description "Retrieve a room by ID"
+      argument :id, ID, required: true
+    end
+  
+    def room(id:)
+      Room.find_by(id: id)
+    end
+
+    field :request, Types::RequestType, null: true do
       argument :id, ID, required: true
     end
 
-    # Define the resolver method for `room_title`
-    def room_title(id:)
-      Room.find(id).title
-    rescue ActiveRecord::RecordNotFound
-      nil
+    def request(id:)
+      Request.find_by(id: id)
     end
   end
 end

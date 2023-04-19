@@ -3,6 +3,7 @@ module Types
     field :create_room, mutation: Mutations::CreateRoom
     field :create_user, mutation: Mutations::CreateUser
     field :signin_user, mutation: Mutations::SignInUser
+    field :create_request, mutation: Mutations::CreateRequest
     # TODO: remove me
     field :test_field, String, null: false,
       description: "An example field added by the generator"

@@ -1,6 +1,6 @@
-class RoomPolicy < ApplicationPolicy
+class RequestPolicy < ApplicationPolicy
   def create?
     # user.present? && user.admin?
-    user&.admin?
+    user&.user?
   end
 end

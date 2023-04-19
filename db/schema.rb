@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_19_180707) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_19_194029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_19_180707) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "role_enum", ["ADMIN", "USER"]
   create_enum "room_class", ["STANDART", "DELUXE", "SUITE"]
+
+  create_table "requests", force: :cascade do |t|
+    t.integer "price"
+    t.integer "capacity"
+    t.bigint "room_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_requests_on_room_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
 
   create_table "rooms", force: :cascade do |t|
     t.string "title"
@@ -38,4 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_19_180707) do
     t.enum "role", enum_type: "role_enum"
   end
 
+  add_foreign_key "requests", "rooms"
+  add_foreign_key "requests", "users"
 end
