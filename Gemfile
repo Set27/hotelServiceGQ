@@ -76,3 +76,5 @@ gem 'graphql', '~> 2.0', '>= 2.0.21'
 gem "graphiql-rails", group: :development
 
 gem "pry", "~> 0.14.2"
+
+gem "bcrypt", "~> 3.1"
