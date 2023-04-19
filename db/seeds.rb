@@ -6,3 +6,4 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 Room.create(title: 'sdasd', price: '123', capacity: '3', rating: 'STANDART')
+User.create(email: 'user@example.com', password: 'joasdosadsakdsa')

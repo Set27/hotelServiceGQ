@@ -25,5 +25,16 @@ module Types
     rescue ActiveRecord::RecordNotFound
       nil
     end
+
+    field :current_user, Types::UserType, null: true
+    field :current_admin, Types::AdminType, null: true
+
+    def current_user
+      context[:current_user] if context[:current_user].is_a?(User)
+    end
+
+    def current_admin
+      context[:current_user] if context[:current_user].is_a?(Admin)
+    end
   end
 end

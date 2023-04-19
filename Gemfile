@@ -74,3 +74,4 @@ end
 
 gem 'graphql', '~> 2.0', '>= 2.0.21'
 gem "graphiql-rails", group: :development
+gem 'devise'
