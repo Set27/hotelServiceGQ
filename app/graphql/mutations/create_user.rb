@@ -12,15 +12,29 @@ module Mutations
     argument :role, Types::RoleEnum, required: true
     argument :auth_provider, AuthProviderSignupData, required: false
 
-    type Types::UserType
+    field :user, Types::UserType, null: false
+    field :errors, [String], null: true
 
     def resolve(name: nil, role: , auth_provider: nil)
-      User.create!(
+      user = User.new(
         name: name,
         role: role,
         email: auth_provider&.[](:credentials)&.[](:email),
         password: auth_provider&.[](:credentials)&.[](:password)
       )
+
+      if user.save!
+        {
+          user: user,
+          errors: nil
+        }
+      else
+        { 
+          user: nil,  
+          errors: user.errors.full_messages
+        }
+      end
+      
     end
   end
 end

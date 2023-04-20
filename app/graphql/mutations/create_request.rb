@@ -8,7 +8,7 @@ module Mutations
     argument :user_id, ID, required: true
 
     field :request, Types::RequestType, null: false
-    field :errors, [String], null: false
+    field :errors, [String], null: true
 
     def resolve(price:, capacity:, room_id:, user_id:)
       request = Request.new(
