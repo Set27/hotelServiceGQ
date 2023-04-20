@@ -3,7 +3,7 @@
 module Types
   class RequestType < Types::BaseObject
     field :id, ID, null: false
-    field :price, Integer 
+    field :price, Integer
     field :capacity, Integer
     field :room, Types::RoomType
     field :user, Types::UserType, null: false
