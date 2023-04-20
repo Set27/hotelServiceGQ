@@ -3,4 +3,8 @@ class RequestPolicy < ApplicationPolicy
     # user.present? && user.admin?
     user&.user?
   end
+  
+  def show?
+    user&.admin?
+  end
 end
