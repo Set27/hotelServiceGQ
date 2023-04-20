@@ -17,11 +17,12 @@ RSpec.describe Mutations::CreateUser, type: :request do
       json = JSON.parse(response.body)
       data = json['data']['createUser']['user']
 
-      expect(data).to include(
+      expect(data).to match({
         'id' => be_present,
         'name' => name,
         'role' => role,
         'email' => email
+      }
       )
       
       expect(User.count).to eq(1)

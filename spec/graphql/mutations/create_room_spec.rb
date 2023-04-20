@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateRoom do
-  describe '#resolve' do
+  describe '.resolve' do
     let(:admin) { create(:admin) }
     let(:context) { authenticated_context(admin) }
     let(:mutation) { described_class.new(object: nil, context: context, field: nil) }

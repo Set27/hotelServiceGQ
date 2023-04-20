@@ -12,7 +12,6 @@ module Mutations
       return unless credentials
 
       user = User.find_by email: credentials[:email]
-
       # ensures we have the correct user
       return unless user
       return unless user.authenticate(credentials[:password])
