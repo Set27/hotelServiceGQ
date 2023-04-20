@@ -8,6 +8,8 @@ module Mutations
 
     field :room, Types::RoomType, null: false
 
+    # type Types::RoomType
+
     def resolve(title:, price:, capacity:, rating:, is_occupied:)
       
       room = Room.new(
@@ -19,10 +21,17 @@ module Mutations
       )
       
       authorize! room, to: :create?
-      
-      room.save!
-
-      { room: room }
+      if room.save!
+        {
+          room: room,
+          errors: []
+        }
+      else
+        {
+          room: nil,
+          errors: room.errors.full_messages
+        }
+      end
     end
   end
 end

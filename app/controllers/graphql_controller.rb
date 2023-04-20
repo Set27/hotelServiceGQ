@@ -13,7 +13,6 @@ class GraphqlController < ApplicationController
       session: session,
       current_user: current_user
     }
-    # binding.pry
     result = HotelServiceSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
