@@ -84,3 +84,5 @@ gem "bcrypt", "~> 3.1"
 
 gem "action_policy-graphql", "~> 0.5.3"
 
+
+gem "search_object_graphql", "~> 1.0"
