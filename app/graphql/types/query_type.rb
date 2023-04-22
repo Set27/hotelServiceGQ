@@ -32,13 +32,21 @@ module Types
       Request.find_by(id: id)
     end
 
-    field :all_requests, [Types::RequestType], null: false, description: "Get all requests"
+    # field :all_requests, [Types::RequestType], null: false, description: "Get all requests"
 
-    def all_requests
-      authorize! Request, to: :show?
-      Request.all
-    end
+    # def all_requests
+    #   authorize! Request, to: :show?
+    #   Request.all
+    # end
 
     field :requests, resolver: Resolvers::RequestSearch
+
+    field :invoice, Types::InvoiceType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def invoice(id:)
+      Invoice.find_by(id: id)
+    end
   end
 end
