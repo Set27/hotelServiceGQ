@@ -39,6 +39,6 @@ module Types
       Request.all
     end
 
-    field :requeststs, resolver: Resolvers::RequestSearch
+    field :requests, resolver: Resolvers::RequestSearch
   end
 end

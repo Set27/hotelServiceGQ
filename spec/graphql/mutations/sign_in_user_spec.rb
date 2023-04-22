@@ -1,5 +1,3 @@
-# spec/mutations/create_user_spec.rb
-
 require 'rails_helper'
 
 RSpec.describe Mutations::SignInUser, type: :request do
