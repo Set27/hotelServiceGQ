@@ -8,10 +8,14 @@ module Mutations
     field :errors, [String], null: true
 
     def resolve(request_id:)
+      authorize! Invoice, to: :create?
+
       request = Request.find(request_id)
+
       num_days = (request.end_date - request.start_date).to_i
       room_price = request.room.price
       total_price = num_days * room_price
+
       invoice = Invoice.new(request: request, price: total_price)
       if invoice.save
         {

@@ -11,6 +11,7 @@ module Mutations
     # type Types::RoomType
 
     def resolve(title:, price:, capacity:, rating:, is_occupied:)
+      authorize! Room, to: :create?
       
       room = Room.new(
         title: title,
@@ -20,7 +21,6 @@ module Mutations
         is_occupied: is_occupied
       )
       
-      authorize! room, to: :create?
       if room.save!
         {
           room: room,
