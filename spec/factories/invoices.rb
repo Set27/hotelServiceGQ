@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :invoice do
     request { nil }
-    price { 1 }
+    price { rand(1..500) }
   end
 end

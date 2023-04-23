@@ -3,4 +3,17 @@ class RoomPolicy < ApplicationPolicy
     # user.present? && user.admin?
     user&.admin?
   end
+
+  def free
+    Room.unoccupied if user.present?
+  end
+
+  def all
+    if user&.admin?
+      Room.all
+    else
+      Room.unoccupied
+    end
+
+  end
 end

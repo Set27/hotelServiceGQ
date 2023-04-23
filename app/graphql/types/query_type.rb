@@ -24,6 +24,20 @@ module Types
       Room.find_by(id: id)
     end
 
+    field :rooms, [Types::RoomType], null: true do
+      argument :type, Types::RoomOccupiedEnum, required: false, default_value: "FREE"
+    end
+
+    def rooms(value)
+      type = value[:type]
+      case type
+        when "FREE"
+         authorize! Room, to: :free
+        when "ALL"
+         authorize! Room, to: :all
+      end
+    end
+
     field :request, Types::RequestType, null: true do
       argument :id, ID, required: true
     end
@@ -31,13 +45,6 @@ module Types
     def request(id:)
       Request.find_by(id: id)
     end
-
-    # field :all_requests, [Types::RequestType], null: false, description: "Get all requests"
-
-    # def all_requests
-    #   authorize! Request, to: :show?
-    #   Request.all
-    # end
 
     field :requests, resolver: Resolvers::RequestSearch
 
@@ -48,5 +55,7 @@ module Types
     def invoice(id:)
       Invoice.find_by(id: id)
     end
+
+    field :invoices, resolver: Resolvers::InvoiceSearch
   end
 end

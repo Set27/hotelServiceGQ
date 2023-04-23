@@ -18,6 +18,8 @@ module Mutations
 
       invoice = Invoice.new(request: request, price: total_price)
       if invoice.save
+        room = request.room
+        room.update(is_occupied: true)
         {
           invoice: invoice,
           errors: []

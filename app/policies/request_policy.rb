@@ -14,4 +14,8 @@ class RequestPolicy < ApplicationPolicy
   def show?
     user&.admin?
   end
+
+  def attach?
+    user&.admin?
+  end
 end
