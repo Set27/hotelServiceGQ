@@ -13,14 +13,14 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       session:,
-      current_user:
+      current_user:,
     }
     result = HotelServiceSchema.execute(query, variables:, context:, operation_name:)
     render json: result
-  rescue StandardError => e
-    raise e unless Rails.env.development?
+  rescue StandardError => error
+    raise error unless Rails.env.development?
 
-    handle_error_in_development(e)
+    handle_error_in_development(error)
   end
 
   private
@@ -49,7 +49,7 @@ class GraphqlController < ApplicationController
     logger.error e.message
     logger.error e.backtrace.join("\n")
 
-    render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+    render json: {errors: [{message: e.message, backtrace: e.backtrace}], data: {}}, status: :internal_server_error
   end
 
   def current_user
@@ -58,7 +58,7 @@ class GraphqlController < ApplicationController
 
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base.byteslice(0..31))
     token = crypt.decrypt_and_verify session[:token]
-    user_id = token.gsub('user-id:', '').to_i
+    user_id = token.gsub("user-id:", "").to_i
     User.find user_id
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     nil

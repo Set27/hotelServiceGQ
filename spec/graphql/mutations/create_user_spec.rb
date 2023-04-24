@@ -2,29 +2,29 @@
 
 # spec/mutations/create_user_spec.rb
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::CreateUser, type: :request do
-  describe '.resolve' do
-    let(:name) { 'John Doe' }
-    let(:role) { 'ADMIN' }
-    let(:email) { 'john@example.com' }
-    let(:password) { 'password' }
+  describe ".resolve" do
+    let(:name) { "John Doe" }
+    let(:role) { "ADMIN" }
+    let(:email) { "john@example.com" }
+    let(:password) { "password" }
 
-    it 'create a user' do
-      post '/graphql', params: {
-        query: query(name:, role:, email:, password:)
+    it "create a user" do
+      post "/graphql", params: {
+        query: query(name:, role:, email:, password:),
       }
 
       json = JSON.parse(response.body)
-      data = json['data']['createUser']['user']
+      data = json["data"]["createUser"]["user"]
 
       expect(data).to match({
-                              'id' => be_present,
-                              'name' => name,
-                              'role' => role,
-                              'email' => email
-                            })
+        "id" => be_present,
+        "name" => name,
+        "role" => role,
+        "email" => email,
+      })
 
       expect(User.count).to eq(1)
     end

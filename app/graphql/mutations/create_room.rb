@@ -20,17 +20,17 @@ module Mutations
         price:,
         capacity:,
         rating:,
-        is_occupied:
+        is_occupied:,
       )
 
       if room.save
         {
-          room:
+          room:,
         }
       else
-        errors = user.errors.full_messages.map { |error| { message: error } }
+        errors = user.errors.full_messages.map { |error| {message: error} }
         raise GraphQL::ExecutionError.new(
-          'Failed to create room', extensions: { errors: }
+          "Failed to create room", extensions: {errors:}
         )
       end
     end

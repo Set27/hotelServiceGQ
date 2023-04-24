@@ -20,12 +20,12 @@ module Mutations
         room = request.room
         room.update(is_occupied: true)
         {
-          invoice:
+          invoice:,
         }
       else
-        errors = user.errors.full_messages.map { |error| { message: error } }
+        errors = user.errors.full_messages.map { |error| {message: error} }
         raise GraphQL::ExecutionError.new(
-          'Failed to create invoice', extensions: { errors: }
+          "Failed to create invoice", extensions: {errors:}
         )
       end
     end

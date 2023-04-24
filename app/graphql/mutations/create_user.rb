@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../types/auth_provider_credentials_input'
+require_relative "../types/auth_provider_credentials_input"
 
 module Mutations
   class CreateUser < BaseMutation
@@ -20,17 +20,17 @@ module Mutations
         name:,
         role:,
         email: auth_provider[:credentials][:email],
-        password: auth_provider[:credentials][:password]
+        password: auth_provider[:credentials][:password],
       )
 
       if user.save
         {
-          user:
+          user:,
         }
       else
-        errors = user.errors.full_messages.map { |error| { message: error } }
+        errors = user.errors.full_messages.map { |error| {message: error} }
         raise GraphQL::ExecutionError.new(
-          'Failed to create user', extensions: { errors: }
+          "Failed to create user", extensions: {errors:}
         )
       end
     end

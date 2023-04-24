@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-0 # frozen_string_literal: true
-
 module Types
   class UserType < Types::BaseObject
     field :id, ID, null: false

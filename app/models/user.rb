@@ -10,10 +10,10 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   def user?
-    role == 'USER'
+    role == "USER"
   end
 
   def admin?
-    role == 'ADMIN'
+    role == "ADMIN"
   end
 end

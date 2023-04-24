@@ -2,7 +2,12 @@
 
 FactoryBot.define do
   factory :invoice do
-    request { nil }
+    request { create(:request, user:) }
     price { rand(1..500) }
+    created_at { Time.zone.now }
+
+    transient do
+      user { create(:user) }
+    end
   end
 end

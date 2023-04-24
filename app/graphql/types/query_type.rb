@@ -12,13 +12,13 @@ module Types
 
     # TODO: remove me
     field :test_field, String, null: false,
-                               description: 'An example field added by the generator'
+      description: "An example field added by the generator"
     def test_field
-      'Hello World!'
+      "Hello World!"
     end
 
     field :room, Types::RoomType, null: true do
-      description 'Retrieve a room by ID'
+      description "Retrieve a room by ID"
       argument :id, ID, required: true
     end
 
@@ -27,15 +27,15 @@ module Types
     end
 
     field :rooms, [Types::RoomType], null: true do
-      argument :type, Types::RoomOccupiedEnum, required: false, default_value: 'FREE'
+      argument :type, Types::RoomOccupiedEnum, required: false, default_value: "FREE"
     end
 
     def rooms(value)
       type = value[:type]
       case type
-      when 'FREE'
+      when "FREE"
         authorize! Room, to: :free
-      when 'ALL'
+      when "ALL"
         authorize! Room, to: :all
       end
     end

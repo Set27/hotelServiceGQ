@@ -12,9 +12,9 @@ module Mutations
 
       request = Request.find(request_id)
       room = Room.find(room_id)
-      return { result: 'Room already occupied' } if room.is_occupied?
+      return {result: "Room already occupied"} if room.is_occupied?
 
-      request.update(room:) ? { result: 'Success' } : { result: 'Failed' }
+      request.update(room:) ? {result: "Success"} : {result: "Failed"}
     end
   end
 end

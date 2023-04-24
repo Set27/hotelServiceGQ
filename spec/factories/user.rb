@@ -3,12 +3,12 @@
 FactoryBot.define do
   factory :user do
     sequence(:name) { |n| "User #{n}" }
-    role { 'USER' }
+    role { "USER" }
     email { Faker::Internet.email(name:) }
-    password { 'password123' }
+    password { "password123" }
 
     factory :admin do
-      role { 'ADMIN' }
+      role { "ADMIN" }
     end
 
     # trait :admin do

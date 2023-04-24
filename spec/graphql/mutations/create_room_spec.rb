@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Mutations::CreateRoom do
-  describe '.resolve' do
+  describe ".resolve" do
     let(:admin) { create(:admin) }
     let(:context) { authenticated_context(admin) }
     let(:mutation) { described_class.new(object: nil, context:, field: nil) }
 
-    let(:title) { 'Example Room' }
+    let(:title) { "Example Room" }
     let(:price) { 100 }
     let(:capacity) { 2 }
-    let(:rating) { 'DELUXE' }
+    let(:rating) { "DELUXE" }
     let(:is_occupied) { false }
 
     let(:resolve_room_creation) do
@@ -20,12 +20,12 @@ RSpec.describe Mutations::CreateRoom do
         price:,
         capacity:,
         rating:,
-        is_occupied:
+        is_occupied:,
       )
     end
 
-    context 'when room creation is successful' do
-      it 'returns the created room' do
+    context "when room creation is successful" do
+      it "returns the created room" do
         result = resolve_room_creation
         expect(result[:room]).to be_a(Room)
         expect(result[:room].title).to eq(title)
@@ -36,8 +36,8 @@ RSpec.describe Mutations::CreateRoom do
       end
     end
 
-    context 'when room creation fails' do
-      let(:invalid_rating) { 'JELUX' }
+    context "when room creation fails" do
+      let(:invalid_rating) { "JELUX" }
 
       let(:resolve_room_creation_with_invalid_rating) do
         mutation.resolve(
@@ -45,15 +45,15 @@ RSpec.describe Mutations::CreateRoom do
           price:,
           capacity:,
           rating: invalid_rating,
-          is_occupied:
+          is_occupied:,
         )
       end
 
-      it 'returns error messages' do
+      it "returns error messages" do
         begin
           resolve_room_creation_with_invalid_rating
-        rescue ActiveRecord::StatementInvalid => e
-          error_message = e.message
+        rescue ActiveRecord::StatementInvalid => error
+          error_message = error.message
         end
 
         expect(error_message).to include("invalid input value for enum room_class: \"#{invalid_rating}\"")

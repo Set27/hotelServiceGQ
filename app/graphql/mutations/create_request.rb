@@ -14,19 +14,19 @@ module Mutations
         price:,
         capacity:,
         room_id:,
-        user_id:
+        user_id:,
       )
 
       authorize! request, to: :create?
 
       if request.save
         {
-          request:
+          request:,
         }
       else
-        errors = user.errors.full_messages.map { |error| { message: error } }
+        errors = user.errors.full_messages.map { |error| {message: error} }
         raise GraphQL::ExecutionError.new(
-          'Failed to create request', extensions: { errors: }
+          "Failed to create request", extensions: {errors:}
         )
       end
     end
