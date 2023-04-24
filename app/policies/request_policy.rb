@@ -2,10 +2,7 @@
 
 class RequestPolicy < ApplicationPolicy
   def scoping
-    scope = Request.all if user&.admin?
-    scope = Request.where(user_id: user.id) if user&.user?
-
-    scope
+    Request.all if user&.admin?
   end
 
   def create?
