@@ -6,9 +6,10 @@ RSpec.describe Resolvers::InvoiceSearch do
   describe "#resolve" do
     let(:user1) { create(:user) }
     let(:user2) { create(:user) }
+    let(:admin) { create(:admin) }
 
     let(:context1) { authenticated_context(user1) }
-    let(:context2) { authenticated_context(user2) }
+    let(:admin_context) { authenticated_context(admin) }
 
     let(:request1_1) { create(:request, user: user1, price: 10) }
     let(:request1_2) { create(:request, user: user1, price: 10) }
@@ -62,6 +63,16 @@ RSpec.describe Resolvers::InvoiceSearch do
     end
 
     describe "graphql query" do
+      let(:query) do
+        <<-GRAPHQL
+          query {
+            invoices {
+              id
+            }
+          }
+        GRAPHQL
+      end
+
       describe "user1" do
         describe "filter & order test" do
           let(:query) do
@@ -89,26 +100,30 @@ RSpec.describe Resolvers::InvoiceSearch do
                "request" => {"id" => request1_3.id.to_s}},
             ])
           end
+        end
 
-          describe "policy test" do
-            let(:query) do
-              <<-GRAPHQL
-                query {
-                  invoices {
-                    id
-                  }
-                }
-              GRAPHQL
-            end
+        describe "policy test" do
+          it "return only user value" do
+            result = HotelServiceSchema.execute(query:, context: context1).as_json
+            expect(result.dig("data", "invoices")).to eq([
+              {"id" => invoice1_1.id.to_s},
+              {"id" => invoice1_2.id.to_s},
+              {"id" => invoice1_3.id.to_s},
+            ])
+          end
+        end
 
-            it "return only user value" do
-              result = HotelServiceSchema.execute(query:, context: context1).as_json
-              expect(result.dig("data", "invoices")).to eq([
-                {"id" => invoice1_1.id.to_s},
-                {"id" => invoice1_2.id.to_s},
-                {"id" => invoice1_3.id.to_s},
-              ])
-            end
+        describe "admin" do
+          it "return all invoces" do
+            result = HotelServiceSchema.execute(query:, context: admin_context).as_json
+            expect(result.dig("data", "invoices")).to eq([
+              {"id" => invoice1_1.id.to_s},
+              {"id" => invoice1_2.id.to_s},
+              {"id" => invoice1_3.id.to_s},
+              {"id" => invoice2_1.id.to_s},
+              {"id" => invoice2_2.id.to_s},
+              {"id" => invoice2_3.id.to_s},
+            ])
           end
         end
       end

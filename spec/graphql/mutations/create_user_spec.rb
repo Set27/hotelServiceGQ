@@ -33,7 +33,7 @@ RSpec.describe Mutations::CreateUser, type: :request do
       <<~GQL
           mutation {
             createUser(
-              name: "#{name}",#{' '}
+              name: "#{name}"
               role: #{role},
               authProvider: {
                 credentials: {

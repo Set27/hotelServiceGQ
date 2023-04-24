@@ -41,7 +41,7 @@ RSpec.describe Mutations::SignInUser, type: :request do
             id
             name
             email
-            role#{'          '}
+            role
           }
         }
       }
