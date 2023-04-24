@@ -21,16 +21,15 @@ module Mutations
         is_occupied: is_occupied
       )
       
-      if room.save!
+      if room.save
         {
           room: room,
-          errors: []
         }
       else
-        {
-          room: nil,
-          errors: room.errors.full_messages
-        }
+        errors = user.errors.full_messages.map { |error| { message: error } }
+        raise GraphQL::ExecutionError.new(
+          "Failed to create room", extensions: { errors: errors }
+        )
       end
     end
   end

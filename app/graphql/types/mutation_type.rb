@@ -6,7 +6,7 @@ module Types
     field :create_request, mutation: Mutations::CreateRequest
     field :create_invoice, mutation: Mutations::CreateInvoice
     field :attach_room_to_request, mutation: Mutations::AttachRoomToRequest
-    # TODO: remove me
+    
     field :test_field, String, null: false,
       description: "An example field added by the generator"
     def test_field

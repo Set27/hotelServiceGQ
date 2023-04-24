@@ -66,6 +66,7 @@ group :development do
   # gem "spring"
   gem "graphiql-rails"
   gem 'rspec-rails', '~> 6.0.1'
+  gem "pry", "~> 0.14.2"
 end
 
 group :test do
@@ -78,11 +79,8 @@ end
 
 gem 'graphql', '~> 2.0', '>= 2.0.21'
 
-gem "pry", "~> 0.14.2"
-
 gem "bcrypt", "~> 3.1"
 
 gem "action_policy-graphql", "~> 0.5.3"
-
 
 gem "search_object_graphql", "~> 1.0.4"

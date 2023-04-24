@@ -2,8 +2,6 @@ require_relative '../types/auth_provider_credentials_input'
 
 module Mutations
   class CreateUser < BaseMutation
-    # often we will need input types for specific mutation
-    # in those cases we can define those input types in the mutation class itself
     class AuthProviderSignupData < Types::BaseInputObject
       argument :credentials, Types::AuthProviderCredentialsInput, required: false
     end
@@ -19,22 +17,20 @@ module Mutations
       user = User.new(
         name: name,
         role: role,
-        email: auth_provider&.[](:credentials)&.[](:email),
-        password: auth_provider&.[](:credentials)&.[](:password)
+        email: auth_provider[:credentials][:email],
+        password: auth_provider[:credentials][:password]
       )
-
-      if user.save!
+      
+      if user.save
         {
-          user: user,
-          errors: nil
+          user: user
         }
       else
-        { 
-          user: nil,  
-          errors: user.errors.full_messages
-        }
+        errors = user.errors.full_messages.map { |error| { message: error } }
+        raise GraphQL::ExecutionError.new(
+          "Failed to create user", extensions: { errors: errors }
+        )
       end
-      
     end
   end
 end

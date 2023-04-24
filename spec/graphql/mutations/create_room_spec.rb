@@ -32,11 +32,6 @@ RSpec.describe Mutations::CreateRoom do
         expect(result[:room].rating).to eq(rating)
         expect(result[:room].is_occupied).to eq(is_occupied)
       end
-
-      it 'returns no errors' do
-        result = resolve_room_creation
-        expect(result[:errors]).to be_empty
-      end
     end
 
     context 'when room creation fails' do

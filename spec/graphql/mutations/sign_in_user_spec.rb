@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Mutations::SignInUser, type: :request do
-  describe '.resolve' do
+  describe 'resolve' do
     let(:user) { create(:user) }
     let(:credentials) {{email: user[:email], password: 'password123'}}
 

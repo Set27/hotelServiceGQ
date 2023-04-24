@@ -5,7 +5,6 @@ module Mutations
     argument :request_id, ID, required: true
 
     field :invoice, Types::InvoiceType, null: true
-    field :errors, [String], null: true
 
     def resolve(request_id:)
       authorize! Invoice, to: :create?
@@ -22,13 +21,12 @@ module Mutations
         room.update(is_occupied: true)
         {
           invoice: invoice,
-          errors: []
         }
       else
-        {
-          invoice: nil,
-          errors: invoice.errors.full_messages
-        }
+        errors = user.errors.full_messages.map { |error| { message: error } }
+        raise GraphQL::ExecutionError.new(
+          "Failed to create invoice", extensions: { errors: errors }
+        )
       end
     end
   end

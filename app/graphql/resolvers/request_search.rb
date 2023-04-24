@@ -13,8 +13,8 @@ class Resolvers::RequestSearch < GraphQL::Schema::Resolver
   end
 
   class RequestOrderBy < ::Types::BaseEnum
-    value 'createdAt_ASC'
-    value 'createdAt_DESC'
+    value 'CREATED_AT_ASC'
+    value 'CREATED_AT_DESC'
   end
 
   option :filter, type: RequestFilter, with: :apply_filter
@@ -29,9 +29,9 @@ class Resolvers::RequestSearch < GraphQL::Schema::Resolver
 
   def apply_sort(scope, value)
     case value
-    when 'createdAt_ASC'
+    when 'CREATED_AT_ASC'
       apply_order_by_with_created_at_asc(scope)
-    when 'createdAt_DESC'
+    when 'CREATED_AT_DESC'
       apply_order_by_with_created_at_desc(scope)
     else
       scope

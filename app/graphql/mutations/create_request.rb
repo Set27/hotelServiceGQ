@@ -8,7 +8,6 @@ module Mutations
     argument :user_id, ID, required: true
 
     field :request, Types::RequestType, null: false
-    field :errors, [String], null: true
 
     def resolve(price:, capacity:, room_id:, user_id:)
       request = Request.new(
@@ -23,13 +22,12 @@ module Mutations
       if request.save
         {
           request: request,
-          errors: []
         }
       else
-        {
-          request: nil,
-          errors: request.errors.full_messages
-        }
+        errors = user.errors.full_messages.map { |error| { message: error } }
+        raise GraphQL::ExecutionError.new(
+          "Failed to create request", extensions: { errors: errors }
+        )
       end
     end
   end
