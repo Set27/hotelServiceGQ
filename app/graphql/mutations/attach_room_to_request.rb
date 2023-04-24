@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class AttachRoomToRequest < BaseMutation
     argument :room_id, ID, required: false
@@ -10,11 +12,9 @@ module Mutations
 
       request = Request.find(request_id)
       room = Room.find(room_id)
-      if room.is_occupied?
-        return { result: "Room already occupied" }
-      end
-      
-      request.update(room: room) ? { result: "Success" } : { result: "Failed" }
+      return { result: 'Room already occupied' } if room.is_occupied?
+
+      request.update(room:) ? { result: 'Success' } : { result: 'Failed' }
     end
   end
 end

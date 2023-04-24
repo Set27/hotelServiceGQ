@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::SignInUser, type: :request do
   describe 'resolve' do
     let(:user) { create(:user) }
-    let(:credentials) {{email: user[:email], password: 'password123'}}
+    let(:credentials) { { email: user[:email], password: 'password123' } }
 
     it 'login succesfull' do
       post '/graphql', params: {
-        query: query(credentials: credentials)
+        query: query(credentials:)
       }
 
       json = JSON.parse(response.body)
@@ -15,7 +17,7 @@ RSpec.describe Mutations::SignInUser, type: :request do
       user_data = json['data']['signInUser']['user']
 
       expect(token_data).to be_present
-      
+
       expect(user_data).to eq(
         'id' => user.id.to_s,
         'name' => user.name,
@@ -39,7 +41,7 @@ RSpec.describe Mutations::SignInUser, type: :request do
             id
             name
             email
-            role          
+            role#{'          '}
           }
         }
       }

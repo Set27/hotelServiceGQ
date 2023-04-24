@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../types/auth_provider_credentials_input'
 
 module Mutations
@@ -13,22 +15,22 @@ module Mutations
     field :user, Types::UserType, null: false
     field :errors, [String], null: true
 
-    def resolve(name: nil, role: , auth_provider: nil)
+    def resolve(role:, name: nil, auth_provider: nil)
       user = User.new(
-        name: name,
-        role: role,
+        name:,
+        role:,
         email: auth_provider[:credentials][:email],
         password: auth_provider[:credentials][:password]
       )
-      
+
       if user.save
         {
-          user: user
+          user:
         }
       else
         errors = user.errors.full_messages.map { |error| { message: error } }
         raise GraphQL::ExecutionError.new(
-          "Failed to create user", extensions: { errors: errors }
+          'Failed to create user', extensions: { errors: }
         )
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class CreateRoom < Mutations::BaseMutation
     argument :title, String, required: true
@@ -12,23 +14,23 @@ module Mutations
 
     def resolve(title:, price:, capacity:, rating:, is_occupied:)
       authorize! Room, to: :create?
-      
+
       room = Room.new(
-        title: title,
-        price: price,
-        capacity: capacity,
-        rating: rating,
-        is_occupied: is_occupied
+        title:,
+        price:,
+        capacity:,
+        rating:,
+        is_occupied:
       )
-      
+
       if room.save
         {
-          room: room,
+          room:
         }
       else
         errors = user.errors.full_messages.map { |error| { message: error } }
         raise GraphQL::ExecutionError.new(
-          "Failed to create room", extensions: { errors: errors }
+          'Failed to create room', extensions: { errors: }
         )
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -8,11 +10,10 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   def user?
-    role == "USER"
+    role == 'USER'
   end
 
   def admin?
-    role == "ADMIN"
+    role == 'ADMIN'
   end
-
 end

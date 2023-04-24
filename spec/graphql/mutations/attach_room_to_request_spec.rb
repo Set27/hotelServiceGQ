@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::AttachRoomToRequest do
   describe '.resolve' do
     let(:admin) { create(:admin) }
     let(:context) { authenticated_context(admin) }
-    let(:mutation) { described_class.new(object: nil, context: context, field: nil) }
+    let(:mutation) { described_class.new(object: nil, context:, field: nil) }
 
     let(:room) { create(:room) }
     let(:request) { create(:request) }
@@ -41,9 +43,9 @@ RSpec.describe Mutations::AttachRoomToRequest do
       let(:context) { authenticated_context(user) }
 
       it 'raises an error' do
-        expect {
+        expect do
           resolve_room_attachment
-        }.to raise_error(ActionPolicy::Unauthorized)
+        end.to raise_error(ActionPolicy::Unauthorized)
         expect(request.reload.room).to be_nil
       end
     end

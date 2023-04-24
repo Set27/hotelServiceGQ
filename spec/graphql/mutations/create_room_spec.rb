@@ -1,27 +1,29 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mutations::CreateRoom do
   describe '.resolve' do
     let(:admin) { create(:admin) }
     let(:context) { authenticated_context(admin) }
-    let(:mutation) { described_class.new(object: nil, context: context, field: nil) }
+    let(:mutation) { described_class.new(object: nil, context:, field: nil) }
 
-    let(:title) { "Example Room" }
+    let(:title) { 'Example Room' }
     let(:price) { 100 }
     let(:capacity) { 2 }
-    let(:rating) { "DELUXE" }
+    let(:rating) { 'DELUXE' }
     let(:is_occupied) { false }
 
     let(:resolve_room_creation) do
       mutation.resolve(
-        title: title,
-        price: price,
-        capacity: capacity,
-        rating: rating,
-        is_occupied: is_occupied
+        title:,
+        price:,
+        capacity:,
+        rating:,
+        is_occupied:
       )
     end
-    
+
     context 'when room creation is successful' do
       it 'returns the created room' do
         result = resolve_room_creation
@@ -35,15 +37,15 @@ RSpec.describe Mutations::CreateRoom do
     end
 
     context 'when room creation fails' do
-      let(:invalid_rating) { "JELUX" }
+      let(:invalid_rating) { 'JELUX' }
 
       let(:resolve_room_creation_with_invalid_rating) do
         mutation.resolve(
-          title: title,
-          price: price,
-          capacity: capacity,
+          title:,
+          price:,
+          capacity:,
           rating: invalid_rating,
-          is_occupied: is_occupied
+          is_occupied:
         )
       end
 

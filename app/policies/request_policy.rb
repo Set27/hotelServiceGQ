@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RequestPolicy < ApplicationPolicy
   def scoping
     scope = Request.all if user&.admin?
@@ -10,7 +12,7 @@ class RequestPolicy < ApplicationPolicy
     # user.present? && user.admin?
     user&.user?
   end
-  
+
   def show?
     user&.admin?
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomPolicy < ApplicationPolicy
   def create?
     # user.present? && user.admin?
@@ -14,6 +16,5 @@ class RoomPolicy < ApplicationPolicy
     else
       Room.unoccupied
     end
-
   end
 end

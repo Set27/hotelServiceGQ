@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class SignInUser < BaseMutation
     null true
@@ -15,9 +17,9 @@ module Mutations
       return unless user.authenticate(credentials[:password])
 
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base.byteslice(0..31))
-      token = crypt.encrypt_and_sign("user-id:#{ user.id }")
+      token = crypt.encrypt_and_sign("user-id:#{user.id}")
       context[:session][:token] = token
-      { user: user, token: token }
+      { user:, token: }
     end
   end
 end
