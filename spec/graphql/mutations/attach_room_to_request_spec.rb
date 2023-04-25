@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::AttachRoomToRequest do
+RSpec.describe Mutations::AttachRoomToRequest, type: :mutation do
   describe ".resolve" do
     let(:admin) { create(:admin) }
     let(:context) { authenticated_context(admin) }

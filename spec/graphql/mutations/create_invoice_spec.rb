@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-RSpec.describe Mutations::CreateInvoice do
+RSpec.describe Mutations::CreateInvoice, type: :mutation do
   describe "#resolve" do
     let(:user) { create(:user) }
     let(:admin) { create(:admin) }
 
     let(:context) { authenticated_context(admin) }
     let(:user_context) { authenticated_context(user) }
-    
+
     let(:mutation) { described_class.new(object: nil, context:, field: nil) }
 
     let(:room) { create(:room) }
@@ -60,7 +60,7 @@ RSpec.describe Mutations::CreateInvoice do
         rescue ActionPolicy::Unauthorized => error
           error_message = error.message
         end
-        
+
         expect(error_message).to be_present
       end
     end
