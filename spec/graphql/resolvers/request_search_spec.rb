@@ -8,9 +8,6 @@ RSpec.describe Resolvers::RequestSearch do
     let(:user2) { create(:user) }
     let(:admin) { create(:admin) }
 
-    let(:context1) { authenticated_context(user1) }
-    let(:admin_context) { authenticated_context(admin) }
-
     let!(:request1_array) do
       [
         create(:request, user: user1, price: 19, created_at: Date.today),
@@ -29,11 +26,11 @@ RSpec.describe Resolvers::RequestSearch do
 
     let(:all_requests) { request1_array + request2_array }
 
-    before do
-      allow_any_instance_of(described_class).to receive(:current_user).and_return(admin)
-    end
-
     describe "class method test" do
+      before do
+        allow_any_instance_of(described_class).to receive(:current_user).and_return(admin)
+      end
+
       describe "#apply_filter" do
         it "returns requests with price greater than or equal to given value" do
           result = subject.apply_filter(Request.all, {price_greater_than: 20})
@@ -76,6 +73,8 @@ RSpec.describe Resolvers::RequestSearch do
       end
 
       describe "admin" do
+        let(:admin_context) { authenticated_context(admin) }
+
         describe "filter & order test" do
           let(:query) do
             <<-GRAPHQL
@@ -92,7 +91,7 @@ RSpec.describe Resolvers::RequestSearch do
           end
 
           it "returns requests for given user id and sorted by created_at in ascending order" do
-            result = HotelServiceSchema.execute(query:, context: context1).as_json
+            result = HotelServiceSchema.execute(query:, context: admin_context).as_json
             expect(result.dig("data", "requests")).to eq([
               {"id" => request1_array[0].id.to_s, "price" => request1_array[0].price,
                "user" => {"id" => user1.id.to_s}},
@@ -102,6 +101,19 @@ RSpec.describe Resolvers::RequestSearch do
                "user" => {"id" => user1.id.to_s}},
             ])
           end
+        end
+      end
+
+      describe "user try to get all request" do
+        let(:context1) { authenticated_context(user1) }
+
+        it "return only users" do
+          result = HotelServiceSchema.execute(query:, context: context1).as_json
+          expect(result.dig("data", "requests")).to eq([
+            {"id" => request1_array[0].id.to_s},
+            {"id" => request1_array[1].id.to_s},
+            {"id" => request1_array[2].id.to_s},
+          ])
         end
       end
     end
