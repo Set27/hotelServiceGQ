@@ -107,7 +107,7 @@ RSpec.describe Resolvers::RequestSearch do
       describe "user try to get all request" do
         let(:context1) { authenticated_context(user1) }
 
-        it "return only users" do
+        it "return only request belong to user" do
           result = HotelServiceSchema.execute(query:, context: context1).as_json
           expect(result.dig("data", "requests")).to eq([
             {"id" => request1_array[0].id.to_s},

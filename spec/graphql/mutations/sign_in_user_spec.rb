@@ -6,6 +6,7 @@ RSpec.describe Mutations::SignInUser, type: :request do
   describe "resolve" do
     let(:user) { create(:user) }
     let(:credentials) { {email: user[:email], password: "password123"} }
+    let(:credentials_invalid) { {email: user[:email], password: "invalid_pass"} }
 
     it "login succesfull" do
       post "/graphql", params: {
@@ -24,6 +25,16 @@ RSpec.describe Mutations::SignInUser, type: :request do
         "email" => user.email,
         "role" => user.role,
       )
+    end
+
+    it "returns an error if invalid credentials are provided" do
+      post "/graphql", params: {
+        query: query(credentials: credentials_invalid),
+      }
+
+      json = JSON.parse(response.body)
+      errors = json["errors"]
+      expect(errors).to be_present
     end
   end
 
