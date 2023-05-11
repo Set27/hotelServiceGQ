@@ -2,7 +2,9 @@
 
 module Types
   class RoomType < Types::BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    # field :id, ID, null: false
+    global_id_field :id
     field :title, String
     field :price, Integer
     field :capacity, Integer

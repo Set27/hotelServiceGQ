@@ -20,7 +20,7 @@ RSpec.describe Mutations::SignInUser, type: :request do
       expect(token_data).to be_present
 
       expect(user_data).to eq(
-        "id" => user.id.to_s,
+        "id" => user.to_gid_param,
         "name" => user.name,
         "email" => user.email,
         "role" => user.role,

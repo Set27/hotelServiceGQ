@@ -92,11 +92,11 @@ RSpec.describe Resolvers::InvoiceSearch do
           it "returns invoices for given user id and sorted by created_at in ascending order" do
             result = HotelServiceSchema.execute(query:, context: context1).as_json
             expect(result.dig("data", "invoices")).to eq([
-              {"id" => invoice1_1.id.to_s, "price" => invoice1_1.price,
+              {"id" => invoice1_1.to_gid_param, "price" => invoice1_1.price,
                "request" => {"id" => request1_1.id.to_s}},
-              {"id" => invoice1_2.id.to_s, "price" => invoice1_2.price,
+              {"id" => invoice1_2.to_gid_param, "price" => invoice1_2.price,
                "request" => {"id" => request1_2.id.to_s}},
-              {"id" => invoice1_3.id.to_s, "price" => invoice1_3.price,
+              {"id" => invoice1_3.to_gid_param, "price" => invoice1_3.price,
                "request" => {"id" => request1_3.id.to_s}},
             ])
           end
@@ -106,9 +106,9 @@ RSpec.describe Resolvers::InvoiceSearch do
           it "return only user value" do
             result = HotelServiceSchema.execute(query:, context: context1).as_json
             expect(result.dig("data", "invoices")).to eq([
-              {"id" => invoice1_1.id.to_s},
-              {"id" => invoice1_2.id.to_s},
-              {"id" => invoice1_3.id.to_s},
+              {"id" => invoice1_1.to_gid_param},
+              {"id" => invoice1_2.to_gid_param},
+              {"id" => invoice1_3.to_gid_param},
             ])
           end
         end
@@ -117,12 +117,12 @@ RSpec.describe Resolvers::InvoiceSearch do
           it "return all invoces" do
             result = HotelServiceSchema.execute(query:, context: admin_context).as_json
             expect(result.dig("data", "invoices")).to eq([
-              {"id" => invoice1_1.id.to_s},
-              {"id" => invoice1_2.id.to_s},
-              {"id" => invoice1_3.id.to_s},
-              {"id" => invoice2_1.id.to_s},
-              {"id" => invoice2_2.id.to_s},
-              {"id" => invoice2_3.id.to_s},
+              {"id" => invoice1_1.to_gid_param},
+              {"id" => invoice1_2.to_gid_param},
+              {"id" => invoice1_3.to_gid_param},
+              {"id" => invoice2_1.to_gid_param},
+              {"id" => invoice2_2.to_gid_param},
+              {"id" => invoice2_3.to_gid_param},
             ])
           end
         end

@@ -10,10 +10,19 @@ class HotelServiceSchema < GraphQL::Schema
   # GraphQL-Ruby calls this when something goes wrong while running a query:
 
   # Union and Interface Resolution
-  def self.resolve_type(_abstract_type, _obj, _ctx)
+  def self.resolve_type(abstract_type, obj, ctx)
     # TODO: Implement this method
     # to return the correct GraphQL object type for `obj`
-    raise(GraphQL::RequiredImplementationMissingError)
+    case obj
+    when Invoice
+      Types::InvoiceType
+    when User
+      Types::UserType
+    when Room
+      Types::RoomType
+    else
+      raise(GraphQL::RequiredImplementationMissingError)
+    end
   end
 
   # Stop validating when it encounters this many errors:

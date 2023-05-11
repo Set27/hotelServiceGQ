@@ -2,7 +2,9 @@
 
 module Types
   class InvoiceType < Types::BaseObject
-    field :id, ID, null: false
+    implements GraphQL::Types::Relay::Node
+    global_id_field :id
+    # field :id, ID, null: false
     field :room, Types::RoomType, null: false
     field :request, Types::RequestType, null: false
     field :price, Integer

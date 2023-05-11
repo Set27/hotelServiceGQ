@@ -94,11 +94,11 @@ RSpec.describe Resolvers::RequestSearch do
             result = HotelServiceSchema.execute(query:, context: admin_context).as_json
             expect(result.dig("data", "requests")).to eq([
               {"id" => request1_array[0].id.to_s, "price" => request1_array[0].price,
-               "user" => {"id" => user1.id.to_s}},
+               "user" => {"id" => user1.to_gid_param}},
               {"id" => request1_array[1].id.to_s, "price" => request1_array[1].price,
-               "user" => {"id" => user1.id.to_s}},
+               "user" => {"id" => user1.to_gid_param}},
               {"id" => request1_array[2].id.to_s, "price" => request1_array[2].price,
-               "user" => {"id" => user1.id.to_s}},
+               "user" => {"id" => user1.to_gid_param}},
             ])
           end
         end

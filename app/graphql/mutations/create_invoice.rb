@@ -14,7 +14,7 @@ module Mutations
       num_days = (request.end_date - request.start_date).to_i
       room_price = request.room.price
       total_price = num_days * room_price
-
+      total_price = request.room.price if total_price.zero?
       invoice = Invoice.new(request:, price: total_price)
       if invoice.save
         room = request.room
@@ -23,7 +23,7 @@ module Mutations
           invoice:,
         }
       else
-        errors = user.errors.full_messages.map { |error| {message: error} }
+        errors = invoice.errors.full_messages.map { |error| {message: error} }
         raise GraphQL::ExecutionError.new(
           "Failed to create invoice", extensions: {errors:}
         )
