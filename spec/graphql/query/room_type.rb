@@ -29,7 +29,7 @@ RSpec.describe Types::RoomType do
 
   it "returns a room by ID" do
     expect(response_room).to eq({
-      "id" => room.id.to_s,
+      "id" => room.to_gid_param,
       "title" => room.title,
       "price" => room.price,
       "capacity" => room.capacity,
@@ -39,6 +39,30 @@ RSpec.describe Types::RoomType do
       "createdAt" => room.created_at.iso8601,
       "updatedAt" => room.updated_at.iso8601,
     })
+  end
+
+  context "node" do
+    let(:response_room) { response.dig("data", "node") }
+
+    let(:query) do
+      <<-GRAPHQL
+        query {
+          node(id: "#{room.to_gid_param}") {
+            ... on Room{
+              id
+              capacity
+            }
+          }
+        }
+      GRAPHQL
+    end
+
+    it "returns a room by global ID" do
+      expect(response_room).to eq({
+        "id" => room.to_gid_param,
+        "capacity" => room.capacity,
+      })
+    end
   end
 
   def execute(query:)

@@ -7,16 +7,6 @@ module Types
     include GraphQL::Types::Relay::HasNodesField
     include ActionPolicy::GraphQL::Behaviour
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
-
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
-    end
-
     field :room, Types::RoomType, null: true do
       description "Retrieve a room by ID"
       argument :id, ID, required: true
@@ -59,5 +49,22 @@ module Types
     end
 
     field :invoices, resolver: Resolvers::InvoiceSearch
+
+    field :user, Types::UserType, null: true do
+      description "Find a user by ID"
+      argument :id, ID, required: true
+    end
+
+    def user(id:)
+      authorize! User, to: :show?
+      User.find_by(id:)
+    end
+
+    field :users, [Types::UserType], null: false, description: "Retrieve all users"
+
+    def users
+      authorize! User, to: :show?
+      User.all
+    end
   end
 end

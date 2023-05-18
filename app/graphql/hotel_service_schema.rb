@@ -10,7 +10,7 @@ class HotelServiceSchema < GraphQL::Schema
   # GraphQL-Ruby calls this when something goes wrong while running a query:
 
   # Union and Interface Resolution
-  def self.resolve_type(abstract_type, obj, ctx)
+  def self.resolve_type(_abstract_type, obj, _ctx)
     # TODO: Implement this method
     # to return the correct GraphQL object type for `obj`
     case obj
