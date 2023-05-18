@@ -126,6 +126,30 @@ RSpec.describe Resolvers::InvoiceSearch do
             ])
           end
         end
+
+        describe "node" do
+          let(:query) do
+            <<-GRAPHQL
+              query {
+                node(id: "#{invoice1_1.to_gid_param}"){
+                  ... on Invoice {
+                  id
+                  price
+                }
+              }
+            }
+            GRAPHQL
+          end
+
+          it "return invoice by global ID" do
+            result = HotelServiceSchema.execute(query:, context: admin_context).as_json
+
+            expect(result.dig("data", "node")).to eq({
+              "id" => invoice1_1.to_gid_param,
+              "price" => invoice1_1.price,
+            })
+          end
+        end
       end
     end
   end
