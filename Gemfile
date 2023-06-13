@@ -67,8 +67,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-  gem "graphiql-rails"
+  gem "datarockets-style", "~> 1.3"
   gem "rspec-rails", "~> 6.0.1"
+  gem "rubocop", "~> 1.50"
 end
 
 group :test do
@@ -78,6 +79,8 @@ group :test do
   gem "webdrivers"
 end
 
+gem "graphiql-rails"
+
 gem "graphql", "~> 2.0", ">= 2.0.21"
 
 gem "bcrypt", "~> 3.1"
@@ -85,7 +88,3 @@ gem "bcrypt", "~> 3.1"
 gem "action_policy-graphql", "~> 0.5.3"
 
 gem "search_object_graphql", "~> 1.0.4"
-
-gem "rubocop", "~> 1.50"
-
-gem "datarockets-style", "~> 1.3"
